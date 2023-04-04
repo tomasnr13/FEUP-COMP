@@ -1,0 +1,361 @@
+PARSER_PACKAGE=pt.up.fe.comp;
+PARSER_CLASS=JmmGrammarParser;
+SMART_NODE_CREATION=false;
+TOKENS_ARE_NODES=false;
+
+SKIP : " " | "\t" | "\r" | "\n" | <LINE_COMMENT:"//" (~["\n","\r"])*> | <BLOCK_COMMENT: "/*" (~["*"])* "*" (~["*","/"] (~["*"])* "*" | "*")* "/">;
+
+TOKEN :
+	< PLUS : "+" > |
+	< MINUS : "-" > |
+	< TIMES : "*" > |
+	< DIVIDE : "/" > |
+	< MOD : "%" > |
+	< NOT : "!" > |
+	< UNARY_PLUS : "++" > |
+	< UNARY_MINUS : "--" > |
+	< BITWISE_SHIFT_LEFT : "<<" > |
+	< BITWISE_SHIFT_RIGHT : ">>" > |
+	< BITWISE_SHIFT_RIGHT_UNSIGNED : ">>>" > |
+	< BITWISE_AND : "&" > |
+	< BITWISE_INCLUSIVE_OR : "|" > |
+	< BITWISE_EXCLUSIVE_OR : "^" > |
+	< BITWISE_COMPLEMENT : "~" > |
+	< COMPARISON_EQUAL : "==" > |
+	< COMPARISON_NOT_EQUAL : "!=" > |
+	< COMPARISON_AND : "&&" > |
+	< COMPARISON_OR : "||" > |
+	< COMPARISON_LESS : "<" > |
+	< COMPARISON_LESS_EQUAL : "<=" > |
+	< COMPARISON_GREATER : ">" > |
+	< COMPARISON_GREATER_EQUAL : ">=" > |
+	< ASSIGN_EQUAL : "=" > |
+	< ASSIGN_PLUS : "+=" > |
+	< ASSIGN_MINUS : "-=" > |
+	< ASSIGN_TIMES : " *=" > |
+	< ASSIGN_DIVIDE : " /=" > |
+	< ASSIGN_MOD : "%=" > |
+	< ASSIGN_BITWISE_AND : "&=" > |
+	< ASSIGN_BITWISE_INCLUSIVE_OR : "|=" > |
+	< ASSIGN_BITWISE_EXCLUSIVE_OR : "^=" > |
+	< ASSIGN_BITWISE_SHIFT_LEFT : "<<=" > |
+	< ASSIGN_BITWISE_SHIFT_RIGHT : ">>=" > |
+	< ASSIGN_BITWISE_SHIFT_RIGHT_UNSIGNED : ">>>=" > |
+	< OPEN_PAREN : "(" > |
+	< CLOSE_PAREN : ")" > |
+	< OPEN_BRACKET : "[" > |
+	< CLOSE_BRACKET : "]" > |
+	< OPEN_CURLY_BRACKET : "{" > |
+	< CLOSE_CURLY_BRACKET : "}" > |
+	< COMMA : "," > |
+	< SEMICOLON : ";" > |
+	< COLON : ":" > |
+	< QUESTION_MARK : "?" > |
+	< DOT : "." > |
+	< BOOL_TRUE : "true" > |
+	< BOOL_FALSE : "false" > |
+	< VALUE_NULL : "null"|"NULL"|"Null" > |
+	< KEY_ABSTRACT : "abstract" > |
+	< KEY_ASSERT : "assert" > |
+	< KEY_BOOLEAN : "boolean" > |
+	< KEY_BREAK : "break" > |
+	< KEY_BYTE : "byte" > |
+	< KEY_CASE : "case" > |
+	< KEY_CATCH : "catch" > |
+	< KEY_CHAR : "char" > |
+	< KEY_CLASS : "class" > |
+	< KEY_CONST : "const" > |
+	< KEY_CONTINUE : "continue" > |
+	< KEY_DEFAULT : "default" > |
+	< KEY_DO : "do" > |
+	< KEY_DOUBLE : "double" > |
+	< KEY_ELSE : "else" > |
+	< KEY_ENUM : "enum" > |
+	< KEY_EXTENDS : "extends" > |
+	< KEY_FINAL : "final" > |
+	< KEY_FINALLY : "finally" > |
+	< KEY_FLOAT : "float" > |
+	< KEY_FOR : "for" > |
+	< KEY_GOTO : "goto" > |
+	< KEY_IF : "if" > |
+	< KEY_IMPLEMENTS : "implements" > |
+	< KEY_IMPORT : "import" > |
+	< KEY_INSTANCEOF : "instanceof" > |
+	< KEY_INT : "int" > |
+	< KEY_INTERFACE : "interface" > |
+	< KEY_LONG : "long" > |
+	< KEY_NATIVE : "native" > |
+	< KEY_NEW : "new" > |
+	< KEY_PACKAGE : "package" > |
+	< MODIFIER_PUBLIC : "public" > |
+	< MODIFIER_PRIVATE : "private" > |
+	< MODIFIER_PROTECTED : "protected" > |
+	< KEY_RETURN : "return" > |
+	< KEY_SHORT : "short" > |
+	< KEY_STATIC : "static" > |
+	< KEY_STRICTFP : "strictfp" > |
+	< KEY_SUPER : "super" > |
+	< KEY_SWITCH : "switch" > |
+	< KEY_SYNCHRONIZED : "synchronized" > |
+	< KEY_THIS : "this" > |
+	< KEY_THROW : "throw" > |
+	< KEY_THROWS : "throws" > |
+	< KEY_TRANSIENT : "transient" > |
+	< KEY_TRY : "try" > |
+	< KEY_VOID : "void" > |
+	< KEY_VOLATILE : "volatile" > |
+	< KEY_WHILE : "while" > |
+	< KEY_LENGTH : "length" > |
+	< KEY_STRING : "String" > |
+	< KEY_MAIN : "main" > |
+	< LITERAL_INTEGER : (["0" - "9"])+ > |
+	< LITERAL_FLOATING_POINT : (["0"-"9"])+ "." (["0"-"9"])+ ("f"|"F"|"d"|"D")? > |
+	< LITERAL_BINARY : "0" ("b"|"B") ("0"|"1")+ > |
+	< LITERAL_HEX : "0" ("x"|"X") (["0"-"9"] | ["a"-"f"] | ["A"-"F"])+ > |
+	< LITERAL_CHARACTER : "\'" (~["\'","\\","\n","\r"]
+                            | "\\" (["n","t","b","r","f","\\","\'","\""]
+                            | ["0"-"7"] (["0"-"7"])?
+                            | ["0"-"3"] ["0"-"7"] ["0"-"7"])) "\'"> |
+	< LITERAL_STRING : "\"" (~["\"","\\","\n","\r"]
+                         | "\\" (["n","t","b","r","f","\\","\'","\""]
+                         | ["0"-"7"] (["0"-"7"])?
+                         | ["0"-"3"] ["0"-"7"] ["0"-"7"]))* "\""> |
+	< IDENTIFIER : (["a"-"z"] | ["A"-"Z"] | "_" | "$") (["a"-"z"] | ["A"-"Z"] | ["0"-"9"] | "_"| "$")* >
+;
+
+LiteralBoolean #void :
+    "true" | "false"
+;
+
+/*AssignmentOperator #void:
+	<ASSIGN_EQUAL> |
+	<ASSIGN_TIMES> |
+	<ASSIGN_PLUS> |
+	<ASSIGN_MOD> |
+	<ASSIGN_DIVIDE> |
+	<ASSIGN_MINUS> |
+	<ASSIGN_BITWISE_AND> |
+	<ASSIGN_BITWISE_EXCLUSIVE_OR> |
+	<ASSIGN_BITWISE_INCLUSIVE_OR> |
+	<ASSIGN_BITWISE_SHIFT_LEFT> |
+	<ASSIGN_BITWISE_SHIFT_RIGHT> |
+	<ASSIGN_BITWISE_SHIFT_RIGHT_UNSIGNED>
+;*/
+
+CompOperator #void:
+	<COMPARISON_AND> |
+	<COMPARISON_EQUAL> |
+	<COMPARISON_GREATER> |
+	<COMPARISON_GREATER_EQUAL> |
+	<COMPARISON_LESS> |
+	<COMPARISON_LESS_EQUAL> |
+	<COMPARISON_NOT_EQUAL> |
+	<COMPARISON_OR>
+;
+
+Modifier #void:
+	(<MODIFIER_PUBLIC> |
+	<MODIFIER_PRIVATE> |
+	<MODIFIER_PROTECTED> |
+	<KEY_STATIC> |
+	<KEY_FINAL> |
+	<KEY_TRANSIENT> |
+	<KEY_ABSTRACT> |
+	<KEY_VOLATILE> |
+	<KEY_STRICTFP> |
+	<KEY_NATIVE> |
+	<KEY_SYNCHRONIZED>
+	)*
+;
+
+Literal #void:
+	(<LITERAL_INTEGER> { jjtThis.put("int", lastConsumedToken.getImage()); }) #IntegerLiteral |
+	(<LITERAL_FLOATING_POINT> { jjtThis.put("float", lastConsumedToken.getImage()); }) #FloatLiteral |
+	(<LITERAL_CHARACTER> { jjtThis.put("char", lastConsumedToken.getImage()); }) #CharLiteral |
+	(<LITERAL_STRING> { jjtThis.put("string", lastConsumedToken.getImage()); }) #StringLiteral |
+	(LiteralBoolean { jjtThis.put("boolean", lastConsumedToken.getImage()); }) #BooleanLiteral |
+	(<VALUE_NULL> { jjtThis.put("null", lastConsumedToken.getImage()); }) #NullLiteral
+;
+
+Start :
+	(ImportDeclaration)* ClassDeclaration <EOF>
+;
+
+ImportDeclaration :
+	<KEY_IMPORT> Name (<DOT> Name)* <SEMICOLON>
+;
+
+Name #Id :
+	<IDENTIFIER> { jjtThis.put("value", lastConsumedToken.getImage()); }
+;
+
+ClassDeclaration :
+	<KEY_CLASS> <IDENTIFIER> { jjtThis.put("name", lastConsumedToken.getImage()); }
+	(<KEY_EXTENDS> <IDENTIFIER> { jjtThis.put("extends", lastConsumedToken.getImage()); })?
+	<OPEN_CURLY_BRACKET>
+        (SCAN 2 VariableDeclaration)*
+        (MethodDeclaration)*
+	<CLOSE_CURLY_BRACKET>
+;
+
+VariableDeclaration :
+	Type <IDENTIFIER> ({jjtThis.put("value",  lastConsumedToken.getImage()); }) #Id <SEMICOLON>
+;
+
+MethodDeclaration #void :
+	<MODIFIER_PUBLIC> (SimpleMethod | MainMethod)
+;
+
+SimpleMethod #MethodDef:
+    Type <IDENTIFIER> ({jjtThis.put("value",  lastConsumedToken.getImage()); }) #Id
+    <OPEN_PAREN> (Parameters)? <CLOSE_PAREN>
+    <OPEN_CURLY_BRACKET>
+        (SCAN 2 VariableDeclaration)*
+        (Statement)*
+        ((<KEY_RETURN> Expression) #Return)  <SEMICOLON>
+    <CLOSE_CURLY_BRACKET>
+;
+
+MainMethod :
+	<KEY_STATIC> <KEY_VOID> <KEY_MAIN> { jjtThis.put("value", "main"); }
+	<OPEN_PAREN> "String" <OPEN_BRACKET> <CLOSE_BRACKET>
+	<IDENTIFIER> { jjtThis.put("param", lastConsumedToken.getImage()); } <CLOSE_PAREN>
+	<OPEN_CURLY_BRACKET>
+	    (SCAN 2 VariableDeclaration)*
+	    (Statement)*
+	<CLOSE_CURLY_BRACKET>
+;
+
+Parameters #void:
+	((Type
+	<IDENTIFIER> ({jjtThis.put("value",  lastConsumedToken.getImage()); }) #Id) #Parameter)
+	(<COMMA> Parameters)*
+;
+
+Type :
+	<KEY_INT> { jjtThis.put("value", "int"); } ((<OPEN_BRACKET> <CLOSE_BRACKET> ){ jjtThis.put("value", "int array"); } )? |
+	<KEY_BOOLEAN> {jjtThis.put("value", "boolean");} |
+	<IDENTIFIER> { jjtThis.put("value", lastConsumedToken.getImage()); }
+;
+
+Statement :
+	Block |
+	IfStatement |
+	WhileStatement |
+	Expression <SEMICOLON>
+;
+
+Block #void :
+	<OPEN_CURLY_BRACKET>
+		(Statement)*
+	<CLOSE_CURLY_BRACKET>
+;
+
+IfStatement #If:
+	<KEY_IF> <OPEN_PAREN> Expression <CLOSE_PAREN> {jjtThis.put("hasElse","false");}
+	    (Statement #Then)
+	(((<KEY_ELSE> Statement) #Else){jjtThis.put("hasElse","true");})?
+;
+
+WhileStatement #While:
+	<KEY_WHILE> <OPEN_PAREN> Expression <CLOSE_PAREN>
+	    (Statement #Do)
+;
+
+Expression :
+	ComparisonAndExpression (<ASSIGN_EQUAL> Expression #Assignment(2))?
+;
+
+ComparisonAndExpression #void :
+	ComparisonLessExpression
+    (
+        ((<COMPARISON_AND>  ComparisonLessExpression) #And(2))
+    )*
+;
+
+ComparisonLessExpression #void :
+	AdditiveExpression
+	(
+		((<COMPARISON_LESS>  AdditiveExpression) #Less(2))
+	)*
+;
+
+AdditiveExpression #void :
+	MultiplicativeExpression
+	(
+		(<PLUS> MultiplicativeExpression) #Add(2) |
+		(<MINUS> MultiplicativeExpression) #Sub(2)
+		
+	)*
+;
+
+MultiplicativeExpression #void :
+	NotExpression
+	(
+		(<TIMES> NotExpression) #Mult(2) |
+		(<DIVIDE> NotExpression) #Div(2)
+	)*
+;
+
+NotExpression #void:
+    (<NOT> #Negation)? PrimaryExpression
+;
+
+PrimaryExpression #void :
+    PrimaryPrefix (PrimarySuffix)*
+;
+
+PrimaryPrefix #void :
+   (<KEY_NEW> NewExpression) #New |
+   Literal |
+   <KEY_THIS> #This |
+   <OPEN_PAREN> Expression <CLOSE_PAREN>  |
+   (<IDENTIFIER> { jjtThis.put("value", lastConsumedToken.getImage()); }) #Id
+;
+
+PrimarySuffix #void :
+    <OPEN_PAREN> (Arguments)? <CLOSE_PAREN> |
+    (<DOT> SuffixPoint) |
+    <OPEN_BRACKET> (Expression) #Array <CLOSE_BRACKET>
+;
+
+SuffixPoint #void :
+    (MethodCall | (<KEY_LENGTH> | <IDENTIFIER>) { jjtThis.put("name", lastConsumedToken.getImage()); }) #Point
+;
+
+Arguments :
+    Expression (<COMMA> Expression)*
+;
+
+MethodCall :
+	<IDENTIFIER> { jjtThis.put("name", lastConsumedToken.getImage()); } <OPEN_PAREN>
+		(Expression (<COMMA> Expression)*)? 
+	<CLOSE_PAREN>
+;
+
+NewExpression #void :
+	(<KEY_INT> <OPEN_BRACKET> ({ jjtThis.put("type", "int array"); }) #Id Expression <CLOSE_BRACKET>  |
+	<IDENTIFIER> ({ jjtThis.put("type", lastConsumedToken.getImage()); }) #Id <OPEN_PAREN> (Arguments)? <CLOSE_PAREN>)
+;
+
+// Injections for the implementation of JmmNode
+// Since this is injected into BaseNode, it affects only non-terminals
+INJECT BaseNode :
+        import pt.up.fe.comp.jmm.ast.JmmNode;
+        import pt.up.fe.comp.jmm.ast.AJmmNode;
+        import pt.up.fe.specs.util.SpecsCollections;
+        extends AJmmNode
+{
+    @Override
+    public List<JmmNode> getChildren() {
+        return SpecsCollections.cast(children(), JmmNode.class);
+    }
+    @Override
+    public void add(JmmNode child, int index) {
+        if (child instanceof Node) {
+            addChild(index, (Node) child);
+        } else {
+            throw new RuntimeException("Node " + child + " is not a Node.");
+        }
+    }
+}
